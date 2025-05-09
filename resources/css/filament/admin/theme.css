@@ -1,0 +1,19 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Noto Kufi Arabic';
+  src: url('/fonts/NotoKufiArabic-Regular.woff2') format('woff2'),
+       url('/fonts/NotoKufiArabic-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  body {
+    font-family: 'Noto Kufi Arabic', ui-sans-serif, system-ui, sans-serif;
+  }
+}

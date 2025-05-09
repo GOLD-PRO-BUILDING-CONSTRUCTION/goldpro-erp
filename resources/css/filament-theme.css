@@ -1,0 +1,7 @@
+@import "@fontsource-variable/noto-kufi-arabic";
+
+body,
+html,
+.filament {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+}
