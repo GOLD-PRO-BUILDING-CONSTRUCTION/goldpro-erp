@@ -8,7 +8,6 @@ GoldPro Construction ERP is a comprehensive Enterprise Resource Planning (ERP) s
 - **Project Management:** Manage multiple construction projects, track progress, allocate resources, and schedule tasks.
 - **Employee Management:** Manage employee records, track attendance, and monitor employee performance.
 - **Financial Management:** Track expenses, revenue, and profits for each project and company-wide financials.
-- **Inventory Management:** Manage and track construction materials and equipment.
 - **Document Management:** Store and organize important documents related to projects, contracts, and employees.
 - **Billing and Invoices:** Generate and manage quotes, invoices, and payment schedules for clients and vendors.
 
@@ -21,7 +20,7 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/GOLD-PRO-BUILDING-CONSTRUCTION/goldpro-erp.git
    cd goldpro-erp
-````
+
 
 2. **Install dependencies:**
 
