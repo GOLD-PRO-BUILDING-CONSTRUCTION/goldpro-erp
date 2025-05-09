@@ -1,5 +1,5 @@
 
-# GoldPro Construction ERP System
+# Gold pro Construction ERP System
 
 GoldPro Construction ERP is a comprehensive Enterprise Resource Planning (ERP) system designed for construction companies to streamline operations, manage projects, and automate various tasks within the organization. The system integrates all departments into a single, cohesive platform, ensuring real-time data, collaboration, and efficiency across the board.
 
