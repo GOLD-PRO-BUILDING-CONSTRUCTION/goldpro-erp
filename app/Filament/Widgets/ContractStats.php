@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Quotation;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
 
@@ -14,6 +15,10 @@ class ContractStats extends BaseWidget
         return [
             Card::make('عدد العملاء', Client::count())
                 ->description('إجمالي العملاء')
+                ->color('success'),
+
+            Card::make('عدد عروض الاسعار', Quotation::count())
+                ->description('إجمالي عروض الاسعار')
                 ->color('success'),
 
             Card::make('عدد العقود', Project::count())

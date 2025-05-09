@@ -20,4 +20,9 @@ class Client extends Model
 
     // إذا كنت تستخدم الحقول المحمية فقط (guarded) بدلاً من fillable، يمكنك تعديلها بهذا الشكل:
     // protected $guarded = [];
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
 }

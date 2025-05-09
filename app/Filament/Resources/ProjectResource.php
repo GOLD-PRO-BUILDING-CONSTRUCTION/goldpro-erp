@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\RelationManagers\PaymentsRelationManager;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,9 +11,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\Radio;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -25,7 +27,6 @@ class ProjectResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
     protected static ?string $navigationLabel = 'المشاريع';
     protected static ?string $navigationGroup = 'إدارة المشاريع';
-
     protected static ?int $navigationSort = 3;
 
     public static function getModelLabel(): string
@@ -69,29 +70,32 @@ class ProjectResource extends Resource
                             ->label('قيمة العقد')
                             ->numeric()
                             ->required(),
+
+                        Radio::make('status')
+                            ->label('حالة المشروع')
+                            ->options([
+                                'active' => 'جاري العمل',
+                                'finished' => 'منتهي',
+                                'cancelled' => 'ملغي',
+                            ])
+                            ->inline()
+                            ->required(),
                     ])
-                    ->columns(2),  
+                    ->columns(2),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-
                 TextColumn::make('contract_number')
                     ->label('رقم العقد')
                     ->sortable()
                     ->searchable(),
-                    
+
                 TextColumn::make('client.name')
                     ->label('العميل')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('address')
-                    ->label('العنوان')
                     ->sortable()
                     ->searchable(),
 
@@ -109,6 +113,21 @@ class ProjectResource extends Resource
                     ->label('قيمة العقد')
                     ->sortable()
                     ->money('KWD', true),
+
+                BadgeColumn::make('status')
+                    ->label('الحالة')
+                    ->colors([
+                        'warning' => fn ($state): bool => $state === 'active',
+                        'success' => fn ($state): bool => $state === 'finished',
+                        'danger' => fn ($state): bool => $state === 'cancelled',
+                    ])
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'active' => 'جاري العمل',
+                        'finished' => 'منتهي',
+                        'cancelled' => 'ملغي',
+                        default => 'غير محدد',
+                    })
+                    ->sortable(),
             ])
             ->filters([])
             ->actions([
@@ -128,7 +147,9 @@ class ProjectResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            PaymentsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

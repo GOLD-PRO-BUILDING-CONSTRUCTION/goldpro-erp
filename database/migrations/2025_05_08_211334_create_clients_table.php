@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name');  // إضافة عمود name
-            $table->string('email')->unique();  // إضافة عمود email
+            $table->string('email')->nullable();  // إضافة عمود email
             $table->string('phone')->nullable();  // إضافة عمود phone
             $table->text('address')->nullable();  // إضافة عمود address
             $table->string('civil_id')->nullable();  // إضافة عمود civil_id

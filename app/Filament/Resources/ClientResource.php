@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\RelationManagers\ProjectsRelationManager;
 use App\Models\Client;
 use Filament\Forms;
 use Filament\Resources\Resource;
@@ -17,18 +18,14 @@ use Filament\Tables\Actions\DeleteBulkAction;
 
 class ClientResource extends Resource
 {
-    // تحديد الموديل الخاص بالمورد
     protected static ?string $model = Client::class;
 
-    // تعيين اسم المورد الذي سيظهر في لوحة الإدارة
     protected static ?string $navigationLabel = 'العملاء';
 
-    // تعيين الأيقونة التي تظهر بجانب المورد
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
     protected static ?string $navigationGroup = 'إدارة المشاريع';
 
-
-    // تحديد ترتيب المورد في الشريط الجانبي
     protected static ?int $navigationSort = 2;
 
     public static function getModelLabel(): string
@@ -36,12 +33,11 @@ class ClientResource extends Resource
         return 'عميل';
     }
 
-    // التسمية الجمع (تستخدم في عنوان الصفحة وغيره)
     public static function getPluralModelLabel(): string
     {
         return 'العملاء';
     }
-    // تحديد الحقول التي سيتم عرضها في النموذج (Form)
+
     public static function form(Form $form): Form
     {
         return $form
@@ -70,7 +66,6 @@ class ClientResource extends Resource
             ]);
     }
 
-    // تحديد الأعمدة التي سيتم عرضها في الجدول (Table)
     public static function table(Table $table): Table
     {
         return $table
@@ -96,9 +91,7 @@ class ClientResource extends Resource
                     ->sortable()
                     ->searchable(),
             ])
-            ->filters([
-                // يمكنك إضافة فلاتر هنا إذا كنت بحاجة إليها
-            ])
+            ->filters([])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
@@ -114,15 +107,13 @@ class ClientResource extends Resource
             ]);
     }
 
-    // تحديد العلاقات (إذا كان هناك أي علاقات مع موديلات أخرى)
     public static function getRelations(): array
     {
         return [
-            // أضف أي علاقات هنا إذا كان لديك
+            ProjectsRelationManager::class,
         ];
     }
 
-    // تحديد الصفحات الخاصة بالمورد
     public static function getPages(): array
     {
         return [
