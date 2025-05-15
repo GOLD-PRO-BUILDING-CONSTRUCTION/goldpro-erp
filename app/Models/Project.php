@@ -65,4 +65,13 @@ class Project extends Model
     {
         return $this->hasMany(Payment::class);
     }
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+    public function projectDocuments()
+    {
+        return $this->hasMany(ProjectDocument::class);
+    }
+
 }

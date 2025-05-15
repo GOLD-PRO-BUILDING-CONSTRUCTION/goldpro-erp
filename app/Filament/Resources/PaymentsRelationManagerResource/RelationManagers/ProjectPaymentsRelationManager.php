@@ -8,7 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class PaymentsRelationManager extends RelationManager
+class ProjectPaymentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'payments';
     protected static ?string $title = 'الدفعات';

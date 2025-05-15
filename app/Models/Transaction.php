@@ -13,11 +13,19 @@ class Transaction extends Model
         'type',
         'amount',
         'description',
+        'accountant_id',
     ];
-    
+
     public function bankAccount()
     {
         return $this->belongsTo(BankAccount::class);
     }
+
+    // في موديل Transaction.php
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'accountant_id');
+    }
+
 
 }

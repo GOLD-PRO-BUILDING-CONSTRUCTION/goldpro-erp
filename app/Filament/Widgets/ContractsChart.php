@@ -2,35 +2,35 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Quotation;
+use App\Models\Project;
 use Filament\Widgets\ChartWidget;
 
-class QuotesPerMonthChart extends ChartWidget
+class ContractsPerMonthChart extends ChartWidget
 {
     protected static ?int $sort = 2;
 
     public function getHeading(): string
     {
         $currentYear = now()->year;
-        return "تسعير السنة الحالية ({$currentYear})";
+        return "مشاريع السنة الحالية ({$currentYear})";
     }
 
     protected function getData(): array
     {
         $currentYear = now()->year;
 
-        // جلب عروض الأسعار في هذه السنة
-        $quotations = Quotation::whereYear('date', $currentYear)->get();
+        // جميع المشاريع في نفس السنة
+        $projects = Project::whereYear('created_at', $currentYear)->get();
 
-        // عدد العروض لكل شهر
+        // إنشاء مصفوفة بعدد المشاريع لكل شهر
         $monthlyCounts = array_fill(1, 12, 0);
 
-        foreach ($quotations as $quote) {
-            $month = (int) \Carbon\Carbon::parse($quote->date)->format('n'); // 1-12
+        foreach ($projects as $project) {
+            $month = (int) $project->created_at->format('n'); // من 1 إلى 12
             $monthlyCounts[$month]++;
         }
 
-        // أسماء الأشهر باللغة العربية
+        // أسماء الشهور بالعربي
         $arabicMonths = [
             'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
             'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
@@ -39,7 +39,7 @@ class QuotesPerMonthChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'عدد عروض الأسعار',
+                    'label' => 'عدد المشاريع',
                     'data' => array_values($monthlyCounts),
                     'backgroundColor' => 'rgba(255, 191, 64, 0.2)',
                     'borderColor' => '#DAA623',

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\BankAccountResource\RelationManagers;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\RelationManagers\RelationManager;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionRelationManager extends RelationManager
 {
@@ -14,7 +15,10 @@ class TransactionRelationManager extends RelationManager
     public function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([
-            Forms\Components\DatePicker::make('date')->label('تاريخ المعاملة')->required(),
+            Forms\Components\DatePicker::make('date')
+                ->label('تاريخ المعاملة')
+                ->required(),
+
             Forms\Components\Select::make('type')
                 ->label('النوع')
                 ->options([
@@ -22,8 +26,30 @@ class TransactionRelationManager extends RelationManager
                     'out' => 'سحب',
                 ])
                 ->required(),
-            Forms\Components\TextInput::make('amount')->label('المبلغ')->numeric()->required(),
-            Forms\Components\TextInput::make('description')->label('البيان')->maxLength(255),
+
+            Forms\Components\TextInput::make('amount')
+                ->label('المبلغ')
+                ->numeric()
+                ->required(),
+
+            Forms\Components\TextInput::make('description')
+                ->label('البيان')
+                ->maxLength(255),
+
+            Forms\Components\Hidden::make('accountant_id')
+                ->default(fn () => Auth::id())
+                ->required(),
+
+            Forms\Components\TextInput::make('user.name')
+                ->label('المحاسب')
+                ->disabled()
+                ->afterStateHydrated(function ($state, $component, $record) {
+                    if ($record) {
+                        $component->state($record->user->name ?? '');
+                    } else {
+                        $component->state(Auth::user()->name);
+                    }
+                }),
         ]);
     }
 
@@ -31,18 +57,26 @@ class TransactionRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('date')->label('التاريخ'),
-                
+                Tables\Columns\TextColumn::make('date')
+                    ->label('التاريخ'),
+
                 Tables\Columns\BadgeColumn::make('type')
                     ->label('النوع')
                     ->colors([
-                        'success' => fn ($state) => $state === 'in', // اللون الأخضر للإيداع
-                        'danger' => fn ($state) => $state === 'out', // اللون الأحمر للسحب
+                        'success' => fn ($state) => $state === 'in',
+                        'danger' => fn ($state) => $state === 'out',
                     ])
                     ->formatStateUsing(fn ($state) => $state === 'in' ? 'إيداع' : 'سحب'),
 
-                Tables\Columns\TextColumn::make('amount')->label('المبلغ')->money('KWD', true),
-                Tables\Columns\TextColumn::make('description')->label('البيان'),
+                Tables\Columns\TextColumn::make('amount')
+                    ->label('المبلغ')
+                    ->money('KWD', true),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->label('البيان'),
+
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('المحاسب'),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()

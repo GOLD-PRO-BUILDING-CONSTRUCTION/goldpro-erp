@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bank_account_id')->constrained()->onDelete('cascade');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->date('date');
-            $table->enum('type', ['in', 'out']); // إيداع أو سحب
-            $table->decimal('amount', 10, 3);
+            $table->decimal('amount', 12, 3);
             $table->string('description');
+            $table->string('receiver_name');
             $table->foreignId('accountant_id')->constrained('employees')->onDelete('set null')->nullable(); // المحاسب من جدول الموظفين
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('expenses');
     }
 };
