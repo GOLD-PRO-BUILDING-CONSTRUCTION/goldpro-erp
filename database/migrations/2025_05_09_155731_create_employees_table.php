@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('phone')->nullable();
             $table->string('civil_id_front')->nullable();
             $table->string('civil_id_back')->nullable();
-            $table->date('residency_start');
+            $table->date('residency_start')->nullable();
             $table->date('residency_end');
             $table->string('job_title');
             $table->string('type'); // مقاول، مهندس، موظف

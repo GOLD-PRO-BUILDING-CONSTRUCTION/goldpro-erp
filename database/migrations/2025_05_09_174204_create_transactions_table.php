@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('type', ['in', 'out']); // إيداع أو سحب
             $table->decimal('amount', 10, 3);
             $table->string('description');
-            $table->foreignId('accountant_id')->constrained('employees')->onDelete('set null')->nullable(); // المحاسب من جدول الموظفين
+            $table->foreignId('accountant_id');
             $table->timestamps();
         });
     }

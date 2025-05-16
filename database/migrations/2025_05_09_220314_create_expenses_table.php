@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 12, 3);
             $table->string('description');
             $table->string('receiver_name');
-            $table->foreignId('accountant_id')->constrained('employees')->onDelete('set null')->nullable(); // المحاسب من جدول الموظفين
+            $table->foreignId('accountant_id'); 
             $table->timestamps();
         });
     }

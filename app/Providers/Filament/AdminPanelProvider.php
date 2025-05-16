@@ -17,20 +17,23 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->plugins([FilamentFullCalendarPlugin::make()])
-            ->id('admin')
-            ->path('admin')
+            ->id('admin') // 👈 مطلوب الآن من Filament
+            ->path('admin') // 👈 مسار لوحة التحكم
             ->login()
             ->colors([
                 'primary' => Color::Amber,
+            ])
+            ->plugins([
+                FilamentFullCalendarPlugin::make(),
+                FilamentShieldPlugin::make(),
             ])
             ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -57,6 +60,5 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
-            
     }
 }

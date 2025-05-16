@@ -49,6 +49,11 @@ class UserResource extends Resource
                 ->email()
                 ->required()
                 ->unique(ignoreRecord: true),
+            Forms\Components\Select::make('الصلاحيات')
+                ->relationship('roles', 'name')
+                ->multiple()
+                ->preload()
+                ->searchable(),
 
             TextInput::make('password')
                 ->label('كلمة المرور')
