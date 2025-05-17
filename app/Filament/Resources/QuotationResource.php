@@ -47,6 +47,7 @@ class QuotationResource extends Resource
                 BelongsToSelect::make('client_id')
                     ->label('العميل')
                     ->relationship('client', 'name')
+                    ->preload()                    
                     ->searchable()
                     ->required(),
                 

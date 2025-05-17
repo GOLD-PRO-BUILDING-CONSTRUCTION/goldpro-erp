@@ -4,9 +4,12 @@ namespace App\Filament\Widgets;
 
 use App\Models\Project;
 use Filament\Widgets\ChartWidget;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class ProjectsPerMonthChart extends ChartWidget
 {
+    use HasWidgetShield;
+
     public function getHeading(): string
     {
         $currentYear = now()->year;

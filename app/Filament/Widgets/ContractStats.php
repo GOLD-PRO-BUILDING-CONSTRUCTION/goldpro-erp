@@ -9,9 +9,17 @@ use App\Models\Employee;
 use App\Models\Quotation;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class ContractStats extends BaseWidget
 {
+    use HasWidgetShield;
+
+    public function getHeading(): string
+    {
+        return "التقارير الأدارية";
+    }
+
     protected function getCards(): array
     {
 

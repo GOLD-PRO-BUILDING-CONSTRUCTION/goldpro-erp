@@ -53,6 +53,7 @@ class AppointmentResource extends Resource
                 Forms\Components\Select::make('employee_id')
                     ->label('الموظف')
                     ->relationship('employee', 'name')
+                    ->preload()                    
                     ->searchable()
                     ->required(),
             ]);

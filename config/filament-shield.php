@@ -5,7 +5,7 @@ return [
         'should_register_navigation' => true,
         'slug' => 'shield/roles',
         'navigation_sort' => 5000,
-        'navigation_badge' => true,
+        'navigation_badge' => false,
         'navigation_group' => true,
         'sub_navigation_position' => null,
         'is_globally_searchable' => false,

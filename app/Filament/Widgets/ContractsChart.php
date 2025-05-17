@@ -4,9 +4,12 @@ namespace App\Filament\Widgets;
 
 use App\Models\Project;
 use Filament\Widgets\ChartWidget;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+
 
 class ContractsPerMonthChart extends ChartWidget
 {
+    use HasWidgetShield;
     protected static ?int $sort = 2;
 
     public function getHeading(): string
